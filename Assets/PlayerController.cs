@@ -1,26 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
-    public Camera cam;
+    public Camera c;
 
-    public NavMeshAgent agent;
-    public bool clicked;
-    public Vector3 dest;
+    public NavMeshAgent agt;
+    public bool flag;
 
     // Update is called once per frame
-    void Update () 
+    void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            clicked = true;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            flag = true;
+            Ray ray = c.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
             {
-                agent.SetDestination(hit.point);
+                agt.SetDestination(hit.point);
             }
         }
     }
