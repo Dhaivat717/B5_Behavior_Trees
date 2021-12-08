@@ -1,0 +1,44 @@
+Tree1:
+
+Start Sequence
+	Sequence Parallel
+		Participant1 GoTo Position
+		Participant2 GoTo Position
+		Participant3 GoTo Position
+	LeafWait
+	PointOthers
+		SequenceShuffleBiased
+			AsisgnRoles(a, b, c)
+			AssignRoles(a, c, b)
+			AssignRoles(b, c, a)
+			AssignRoles(b, a, c)
+			AssignRoles(c, a, b)
+			AssignRoles(c, b, a)
+
+
+Tree2:
+
+AssignRoles(a, b, c)
+	Sequence
+		Sequence Parallel
+			faceAndPoint(a, b, 2000)
+			TextOn("You turn on the Light")
+		Sequence Parallel
+			faceAndPoint(a, c, 2000)
+			TextOn("You turn on the TV")
+		Sequence Parallel
+			WatchTV(a)
+			Sequence
+				LightOff(b)
+				WatchTV(b)
+			Sequence
+				TVOnOFF(c)
+				WatchTV(c)
+		DecoratorLoop
+			Sequence Parallel
+				DecoratorLoop
+					LeafAssert
+						lamp.enabled
+				Sequence
+					LightOff(b)
+					WatchTV(b)

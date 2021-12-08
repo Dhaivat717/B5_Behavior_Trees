@@ -1,0 +1,60 @@
+2d60112 was Yanshi Luo, 3 minutes ago, message: Update README.md
+60863bc was Yanshi Luo, 3 minutes ago, message: Set back timescale
+67c04b3 was Yanshi Luo, 9 minutes ago, message: Fix
+873ccc3 was Yanshi Luo, 16 minutes ago, message: Update README.md
+df28d31 was Yanshi Luo, 20 minutes ago, message: ANGRY
+8cf72e3 was Yanshi Luo, 23 minutes ago, message: Merge branch 'master' of https://github.com/ashdunn/b5
+5fd678e was Yanshi Luo, 24 minutes ago, message: Update AgreeStatus
+ed2cd82 was Daniel Nakhimovich, 31 minutes ago, message: angryCount count right
+a9fe5ae was Daniel Nakhimovich, 35 minutes ago, message: don't ignore editor
+ef7e2df was Yanshi Luo, 74 minutes ago, message: Update ProjBehaviorTree.cs
+e1a8def was Yanshi Luo, 2 hours ago, message: Update angryCount
+7ec9c6c was ashdunn, 2 hours ago, message: Merge branch 'master' of https://github.com/ashdunn/b5
+8739b2c was ashdunn, 2 hours ago, message: start player at origin
+1336e74 was Yanshi Luo, 2 hours ago, message: Merge branch 'master' of https://github.com/ashdunn/b5
+a9a4916 was Yanshi Luo, 2 hours ago, message: Update README.md
+bea849d was ashdunn, 2 hours ago, message: Update README.md
+4b175d5 was ashdunn, 2 hours ago, message: Merge branch 'master' of https://github.com/ashdunn/b5
+814f595 was ashdunn, 2 hours ago, message: fix not always clicking switch
+2b5db8f was Yanshi Luo, 2 hours ago, message: Greeting
+b8fcf50 was ashdunn, 2 hours ago, message: change shirt colors
+f637c74 was ashdunn, 3 hours ago, message: remove light with space script
+dc5ed6c was ashdunn, 3 hours ago, message: player activates light switch when close, but walks to 0,0,0 before click to move works
+b02f7f8 was ashdunn, 3 hours ago, message: Merge branch 'master' of https://github.com/ashdunn/b5
+008884a was ashdunn, 3 hours ago, message: player turn off light unity steering control problems
+6e53be0 was Yanshi Luo, 3 hours ago, message: Only turn on/off bulb when near switch
+b68196f was ashdunn, 4 hours ago, message: trigger adjustments
+0b3a901 was ashdunn, 4 hours ago, message: NPCs set layer to ignore raycast allow interaction
+d54b954 was ashdunn, 4 hours ago, message: change trigger to switch and set layer to ignore raycast
+4464521 was Yanshi Luo, 5 hours ago, message: Update Light Bulb PlayerinRange
+174f550 was ashdunn, 5 hours ago, message: say hi and scene play out
+902cef6 was Yanshi Luo, 5 hours ago, message: Simple greeding
+7b1a661 was Yanshi Luo, 6 hours ago, message: Update Sequence
+609063b was Daniel Nakhimovich, 7 hours ago, message: meta files weirdness
+6bb941f was ashdunn, 7 hours ago, message: allow canvas/speech bubble text to be changed
+762b6e4 was Yanshi Luo, 7 hours ago, message: Sequence?
+de6e3ef was Yanshi Luo, 8 hours ago, message: Update pressP trigger
+22de5d9 was Yanshi Luo, 8 hours ago, message: Fix Collider RB issue
+7a17039 was Yanshi Luo, 8 hours ago, message: Update Player collider
+f913f9e was Yanshi Luo, 9 hours ago, message: Add Nodes
+934ae83 was Yanshi Luo, 22 hours ago, message: Story Design
+df0045a was Yanshi Luo, 23 hours ago, message: Add a click2move player
+bc6ef00 was Yanshi Luo, 26 hours ago, message: Update README.md
+4818017 was Yanshi Luo, 26 hours ago, message: Update Readme
+22050a0 was Daniel Nakhimovich, 26 hours ago, message: actually sitting
+cabb896 was ashdunn, 26 hours ago, message: Merge branch 'master' of https://github.com/ashdunn/b5
+7f93cc5 was ashdunn, 26 hours ago, message: stay seated but stand up to turn off light
+f8a903b was Yanshi Luo, 26 hours ago, message: Update README.md
+8016126 was Daniel Nakhimovich, 27 hours ago, message: Merge branch 'master' of github.com:ashdunn/b5
+8be270d was Daniel Nakhimovich, 27 hours ago, message: sit down
+b087d2b was Yanshi Luo, 27 hours ago, message: Tree nodes representation
+956acc9 was Daniel Nakhimovich, 27 hours ago, message: Merge branch 'master' of github.com:ashdunn/b5
+d689c47 was Daniel Nakhimovich, 27 hours ago, message: sofa
+ce4c1c8 was Yanshi Luo, 27 hours ago, message: Update README.md
+5888a28 was Daniel Nakhimovich, 28 hours ago, message: smaller scene
+e929d60 was ashdunn, 28 hours ago, message: fix light on with space
+97d59b6 was Daniel Nakhimovich, 28 hours ago, message: merge
+402b8e3 was Daniel Nakhimovich, 28 hours ago, message: blah
+3377a1c was Daniel Nakhimovich, 28 hours ago, message: switch press IK
+2629ae9 was Yanshi Luo, 29 hours ago, message: Create README
+2ca899b was ashdunn, 30 hours ago, message: for real this time

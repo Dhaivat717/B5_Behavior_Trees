@@ -1,0 +1,46 @@
+Copy to https://dreampuf.github.io/GraphvizOnline/
+
+digraph G {
+  "Start Sequence" -> "Sequence Parallel"
+  "Start Sequence" -> "LeafWait"
+  "Start Sequence" -> "PointOthers"
+  "PointOthers" -> "SequenceShuffleBiased"
+  "Sequence Parallel" -> "Participant1 GoTo Position"
+  "Sequence Parallel" -> "Participant2 GoTo Position"
+  "Sequence Parallel" -> "Participant3 GoTo Position"
+  "SequenceShuffleBiased" -> "AsisgnRoles(a, b, c)"
+  "SequenceShuffleBiased" -> "AsisgnRoles(a, c, b)"
+  "SequenceShuffleBiased" -> "AsisgnRoles(b, c, a)"
+  "SequenceShuffleBiased" -> "AsisgnRoles(b, a, c)"
+  "SequenceShuffleBiased" -> "AsisgnRoles(c, a, b)"
+  "SequenceShuffleBiased" -> "AsisgnRoles(c, b, a)"
+}
+
+
+digraph G {
+  "AssignRoles(a, b, c)" -> "Sequence"
+  "Sequence" -> "Sequence Parallel 1"
+  "Sequence" -> "Sequence Parallel 2"
+  "Sequence" -> "Sequence Parallel 3"
+  "Sequence" -> "DecoratorLoop"
+  "DecoratorLoop" -> "Sequence Parallel 4"-> "DecoratorLoop2" -> "LeafAssert" -> "lamp.enabled"
+  "Sequence Parallel 4"-> "Sequence4"
+  "Sequence4"-> "LightOff(b)"
+  "Sequence4"-> "WatchTV(b)"
+
+  "Sequence Parallel 1" -> "faceAndPoint(a, b, 2000)"
+  "Sequence Parallel 1" -> "TextOn(\"You turn on the Light\")"
+  "Sequence Parallel 2" -> "faceAndPoint(a, c, 2000)"
+  "Sequence Parallel 2" -> "TextOn(\"You turn on the TV\")"
+  "Sequence Parallel 3" -> "WatchTV(a)"
+
+  "Sequence Parallel 3" -> "Sequence2"
+  "Sequence2" -> "LightOff(b)"
+  "Sequence2" -> "WatchTV(b)"
+  "Sequence Parallel 3" -> "Sequence3"
+
+  "Sequence3" -> "LightOff(c)"
+  "Sequence3" -> "WatchTV(c)"
+
+}
+
