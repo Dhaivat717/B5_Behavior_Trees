@@ -288,6 +288,7 @@ public class ProjBehaviorTree : MonoBehaviour
                     );
     }
 
+   
     protected bool LightOffRole()
     {
         angryCount += 1;
@@ -299,32 +300,32 @@ public class ProjBehaviorTree : MonoBehaviour
     protected Node AssignRoles(GameObject parta, GameObject partb, GameObject partc)
     {
 
-        Func<bool> act = () => (bulb.enabled);
-        Node trigger = new DecoratorLoop(new LeafAssert(act));
+        Func<bool> act = () => (lamp.enabled);
+        Node trigger = new DecoratorLoop (new LeafAssert (act));
 
         Func<bool> playerinRangeA = () => (parta.GetComponentInChildren<PlayerinRange>().playerinRange);
         Func<bool> playerinRangeB = () => (partb.GetComponentInChildren<PlayerinRange>().playerinRange);
         Func<bool> playerinRangeC = () => (partc.GetComponentInChildren<PlayerinRange>().playerinRange);
 
-        Node triggerA = new DecoratorLoop(new LeafAssert(playerinRangeA));
-        Node triggerB = new DecoratorLoop(new LeafAssert(playerinRangeB));
-        Node triggerC = new DecoratorLoop(new LeafAssert(playerinRangeC));
+        Node triggerA = new DecoratorLoop (new LeafAssert (playerinRangeA));
+        Node triggerB = new DecoratorLoop (new LeafAssert (playerinRangeB));
+        Node triggerC = new DecoratorLoop (new LeafAssert (playerinRangeC));
 
-        return new Sequence(
-                new SequenceParallel(this.faceAndPoint(parta.GetComponent<BehaviorMecanim>(), partb, 2000), this.TextOn("You turn off the light", allLight, TextLeft)),
-                new SequenceParallel(this.faceAndPoint(parta.GetComponent<BehaviorMecanim>(), partc, 2000), this.TextOn("You turn on the TV", allLight, TextLeft)),
+        return new Sequence (
+                new SequenceParallel (this.faceAndPoint (parta.GetComponent<BehaviorMecanim>(), partb, 2000), this.TextOn ("You turn off the Bulb", canvasLight, bubbleTextL)),
+                new SequenceParallel (this.faceAndPoint (parta.GetComponent<BehaviorMecanim>(), partc, 2000), this.TextOn ("You turn on the TV", canvasLight, bubbleTextL)),
 
-                new SequenceParallel(
-                    this.WatchTV(parta.GetComponent<BehaviorMecanim>(), TVPos1, Seat1),
-                    new Sequence(this.LightOff(partb.GetComponent<BehaviorMecanim>()), this.WatchTV(partb.GetComponent<BehaviorMecanim>(), TVPos3, Seat3)),
-                    new Sequence(this.TVOnOff(partc.GetComponent<BehaviorMecanim>()), this.WatchTV(partc.GetComponent<BehaviorMecanim>(), TVPos2, Seat2)),
-
-                    new DecoratorLoop(new DecoratorForceStatus(RunStatus.Success,
+                new SequenceParallel (
+                    this.WatchTV(parta.GetComponent<BehaviorMecanim>(), TVp1, SofaIK1),
+                    new Sequence(this.LightOff(partb.GetComponent<BehaviorMecanim>()), this.WatchTV(partb.GetComponent<BehaviorMecanim>(), TVp3, SofaIK3)),
+                    new Sequence(this.TVOnOff(partc.GetComponent<BehaviorMecanim>()), this.WatchTV(partc.GetComponent<BehaviorMecanim>(), TVp2, SofaIK2)),
+                    
+                    new DecoratorLoop (new DecoratorForceStatus (RunStatus.Success,
                             new SequenceParallel(
                                 trigger,
                                 new Sequence(
                                     this.LightOff(partb.GetComponent<BehaviorMecanim>()),
-                                    this.WatchTV(partb.GetComponent<BehaviorMecanim>(), TVPos3, Seat3))
+                                    this.WatchTV(partb.GetComponent<BehaviorMecanim>(), TVp3, SofaIK3))
                                 )
                             ))
 
@@ -336,7 +337,7 @@ public class ProjBehaviorTree : MonoBehaviour
 
     protected Node pointOthers(GameObject parta, GameObject partb, GameObject partc)
     {
-        return new SelectorShuffle(
+        return new SelectorShuffle (
                 this.AssignRoles(parta, partb, partc),
                 this.AssignRoles(parta, partc, partb),
                 this.AssignRoles(partb, partc, parta),
@@ -350,24 +351,24 @@ public class ProjBehaviorTree : MonoBehaviour
     protected Node BuildTreeRoot()
     {
 
-        Val<Vector3> pos1 = Val.V(() => point1.position);
-        Val<Vector3> pos2 = Val.V(() => point2.position);
-        Val<Vector3> pos3 = Val.V(() => point3.position);
+        Val<Vector3> pos1 = Val.V (() => p1.position);
+        Val<Vector3> pos2 = Val.V (() => p2.position);
+        Val<Vector3> pos3 = Val.V (() => p3.position);
 
-        //Val<Vector3> face = Val.V (() => player1.transform.position);
+        
         Node setup = new Sequence
             (
 
-             new SequenceParallel(
+             new SequenceParallel (
                  part1.Node_GoTo(pos1),
                  part2.Node_GoTo(pos2),
-                 part3.Node_GoTo(pos3)//,
-                                      //Player.GetComponent<BehaviorMecanim>().Node_GoTo(Player.transform.position)
+                 part3.Node_GoTo(pos3)
+                 
                  ),
 
              new LeafWait(500),
 
-             this.pointOthers(player3, player2, player1)
+             this.pointOthers(participant1, participant2, participant3)
 
             );
 
@@ -376,14 +377,14 @@ public class ProjBehaviorTree : MonoBehaviour
 
         Node root = new SelectorParallel(
                 setup,
-                this.Simplify(player3, player2, player1)
+                this.Simplify(participant1, participant2, participant3)
                 );
 
 
-        Val<Vector3> face1 = Val.V(() => player4.transform.position);
-        Val<Vector3> face2 = Val.V(() => player3.transform.position);
+        Val<Vector3> face1 = Val.V(() => participant4.transform.position);
+        Val<Vector3> face2 = Val.V(() => participant1.transform.position);
 
-        //Node root = new Sequence(part1.Node_OrientTowards(face1), player4.GetComponent<BehaviorMecanim>().Node_OrientTowards(face2));
+        
         return root;
     }
 }
