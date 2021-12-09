@@ -59,7 +59,7 @@ public class ProjBehaviorTree : MonoBehaviour
 
 
     private BehaviorAgent behaviorAgent;
-    // Use this for initialization
+
     void Start()
     {
 
@@ -78,123 +78,116 @@ public class ProjBehaviorTree : MonoBehaviour
     }
 
 
-    protected Node faceAndPoint(BehaviorMecanim part, GameObject facing, int time)
+    protected Node faceAndPoint(BehaviorMecanim section, GameObject facing, int t)
     {
         Val<Vector3> face = Val.V(() => facing.transform.position);
         return new Sequence
             (
-             part.Node_OrientTowards(face),
-             part.Node_HandAnimation("pointing", true),
-             new LeafWait(time),
-             part.Node_HandAnimation("pointing", false)
+             section.Node_OrientTowards(face),
+             section.Node_HandAnimation("looking", true),
+             new LeafWait(t),
+             section.Node_HandAnimation("looking", false)
             );
     }
 
 
-    protected Node LightOff(BehaviorMecanim part)
+    protected Node LightOff(BehaviorMecanim section)
     {
-        Val<Vector3> position = Val.V(() => lightStand.position);
-        Val<Vector3> face = Val.V(() => lSwitch1.transform.position);
+        Val<Vector3> pos = Val.V(() => lightStand.position);
+        Val<Vector3> glance = Val.V(() => lSwitch1.transform.position);
         return new Sequence
             (
-             part.Node_StopInteraction(butt),
-             part.Node_GoTo(position),
-             part.Node_OrientTowards(face),
+             section.Node_StopInteraction(butt),
+             section.Node_GoTo(pos),
+             section.Node_OrientTowards(glance),
 
-             part.Node_StartInteraction(hand, lSwitch2),
+             section.Node_StartInteraction(hand, lSwitch2),
              new LeafWait(500),
              new LeafInvoke(() => bulb.enabled = !bulb.enabled),
 
-             part.Node_StopInteraction(hand)
+             section.Node_StopInteraction(hand)
             );
     }
 
 
-    protected Node TVOnOff(BehaviorMecanim part)
+    protected Node TVOnOff(BehaviorMecanim section)
     {
-        Val<Vector3> position = Val.V(() => TVSwitchStand.position);
-        Val<Vector3> face = Val.V(() => TVSwitch1.transform.position);
+        Val<Vector3> pos = Val.V(() => TVSwitchStand.position);
+        Val<Vector3> glance = Val.V(() => TVSwitch1.transform.position);
         return new Sequence
             (
-             part.Node_GoTo(position),
-             part.Node_OrientTowards(face),
+             section.Node_GoTo(pos),
+             section.Node_OrientTowards(glance),
 
-             part.Node_StartInteraction(hand, TVSwitch2),
+             section.Node_StartInteraction(hand, TVSwitch2),
              new LeafWait(500),
 
-             part.Node_StopInteraction(hand)
+             section.Node_StopInteraction(hand)
             );
     }
 
-    protected Node TextOn(String speech, GameObject canvas, Text t)
+    protected Node TextOn(String s, GameObject c, Text te)
     {
-        //t.text = speech;
         return new Sequence
             (
-             new LeafInvoke(() => t.text = speech),
-             new LeafInvoke(() => canvas.GetComponent<CanvasGroup>().alpha = 1),
+             new LeafInvoke(() => te.text = s),
+             new LeafInvoke(() => c.GetComponent<CanvasGroup>().alpha = 1),
              new LeafWait(2000),
-             new LeafInvoke(() => canvas.GetComponent<CanvasGroup>().alpha = 0)
+             new LeafInvoke(() => c.GetComponent<CanvasGroup>().alpha = 0)
             );
 
     }
 
-    protected Node WatchTV(BehaviorMecanim part, Transform p, InteractionObject s)
+    protected Node WatchTV(BehaviorMecanim pt, Transform p, InteractionObject s)
     {
-        Val<Vector3> tvpos = Val.V(() => TVPosition.position);
+        Val<Vector3> tpos = Val.V(() => TVPosition.position);
         Val<Vector3> standpos = Val.V(() => p.position);
-        // Val<InteractionObject> sofapos = Val.V (() => s);
-        //Val<float> dist = Val.V (() => 2.0f);
         return new Sequence(
-                part.Node_GoTo(standpos),
-                part.Node_OrientTowards(tvpos),
-                part.Node_StartInteraction(butt, s)
+                pt.Node_GoTo(standpos),
+                pt.Node_OrientTowards(tpos),
+                pt.Node_StartInteraction(butt, s)
                 );
     }
 
-    private void updatePos(Val<Vector3> v, GameObject part)
+    private void updatePos(Val<Vector3> v, GameObject p)
     {
-        part.GetComponent<SteeringController>().Target = v.Value;
+        p.GetComponent<SteeringController>().Target = v.Value;
     }
 
     protected Node StoryPause()
     {
-        // A, B and C are now sitting on the sofa
         return new Sequence(
-                new SequenceParallel(this.TextOn("Nothing strange happens. They are watching TV......", allLight, TextLeft))
+                new SequenceParallel(this.TextOn("All of them are watching Samsung Neo QLED", allLight, TextLeft))
                 );
     }
 
     protected Node TalktoLighter()
     {
-        // You ask A to fix light bulb and he is angry
         return new Sequence(
-                new SequenceParallel(this.TextOn("You: What are you doing here?", allLight, TextLeft)),
-                new SequenceParallel(this.TextOn("B: The light seems broken, can you help me ask somebody to fix that?", SamsungNeoQLED, TextTop))
+                new SequenceParallel(this.TextOn("You: How you doing", allLight, TextLeft)),
+                new SequenceParallel(this.TextOn("B: Bulbs seems to be broken, could you help me ask help from someone?", SamsungNeoQLED, TextTop))
                 );
     }
 
     protected Node Ending1()
     {
-        // You ask A to fix light bulb and he is angry
         return new Sequence(
-                new SequenceParallel(this.TextOn("You: The light bulb is broken, can you help that guy fix it?", SamsungNeoQLED, TextTop)),
-                new SequenceParallel(this.TextOn("A: Hah? How dare you ask me to do that?", allLight, TextLeft))
+                new SequenceParallel(this.TextOn("You: Bulbs seems to be broken, could you help me fix?", SamsungNeoQLED, TextTop)),
+                new SequenceParallel(this.TextOn("A: How did you even dare to ask this to me?", allLight, TextLeft))
                 );
     }
     protected Node Ending2(GameObject partc)
     {
-        Func<bool> act = () => (bulb.enabled);
-        Node trigger = new DecoratorLoop(new LeafAssert(act));
+        Func<bool> at = () => (bulb.enabled);
+        Node t = new DecoratorLoop(new LeafAssert(at));
 
-        // You ask A to fix light bulb and he is angry
         return new Sequence(
-                new SequenceParallel(this.TextOn("You: The light bulb is broken, can you help that guy fix it?", SamsungNeoQLED, TextTop)),
-                new SequenceParallel(this.TextOn("C: Alright. I'll take a look at that.", allLight, TextLeft)),
+                new SequenceParallel(this.TextOn("You: The Bulbs seems to be broken, could you help the guy fix it?", SamsungNeoQLED, TextTop)),
+                new SequenceParallel(this.TextOn("C:Sure, will do!!", allLight, TextLeft)),
 
                 new DecoratorLoop(new DecoratorForceStatus(RunStatus.Success,
                         new SequenceParallel(
-                            trigger,
+                            t,
                             new Sequence(
                                 this.LightOff(partc.GetComponent<BehaviorMecanim>()), this.WatchTV(partc.GetComponent<BehaviorMecanim>(), TVPos3, Seat3)))))
                 );
@@ -204,12 +197,12 @@ public class ProjBehaviorTree : MonoBehaviour
     protected Node Greeting(String Role)
     {
         return new SelectorShuffle(
-                this.TextOn(Role + "Oh! Hey~", SamsungNeoQLED, TextTop),
-                this.TextOn(Role + "They got some really nice TV show, right?", SamsungNeoQLED, TextTop),
-                this.TextOn(Role + "Hmmmm.......", SamsungNeoQLED, TextTop),
-                this.TextOn(Role + "How are you?", SamsungNeoQLED, TextTop),
-                this.TextOn(Role + "Cool!", SamsungNeoQLED, TextTop),
-                this.TextOn(Role + "Nice weather today, isn't it?", SamsungNeoQLED, TextTop)
+                this.TextOn(Role + "Oh! Hey", SamsungNeoQLED, TextTop),
+                this.TextOn(Role + "got some really nice show here?", SamsungNeoQLED, TextTop),
+                this.TextOn(Role + "hmm.", SamsungNeoQLED, TextTop),
+                this.TextOn(Role + "hru?", SamsungNeoQLED, TextTop),
+                this.TextOn(Role + "sure thing", SamsungNeoQLED, TextTop),
+                this.TextOn(Role + "cool weather, isnt it?", SamsungNeoQLED, TextTop)
                 );
     }
 
@@ -271,8 +264,7 @@ public class ProjBehaviorTree : MonoBehaviour
                                 new SequenceParallel(
                                     triggerAngry,
                                     new Sequence(
-                                        // this.Greeting("C: ")
-                                        this.TextOn("B: HEY!!!!!! STOP TOUCHING THE SWITCH!!!!!!", SamsungNeoQLED, TextTop)
+                                        this.TextOn("B: Stop , touching the switch pls!", SamsungNeoQLED, TextTop)
                                         )
                                     ))
                             )),
@@ -282,7 +274,6 @@ public class ProjBehaviorTree : MonoBehaviour
                             new Sequence(
                                 triggerSwitch,
                                 new Sequence(this.LightOff(Player.GetComponent<BehaviorMecanim>()), new LeafInvoke(() => this.LightOffRole()))
-                                // this.NPCLightOff()
                                 )
                         )),
                     new SequenceParallel(
