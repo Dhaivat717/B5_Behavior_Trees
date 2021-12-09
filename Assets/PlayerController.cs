@@ -7,14 +7,15 @@ public class PlayerController : MonoBehaviour
     public Camera c;
 
     public NavMeshAgent agt;
-    public bool flag;
+    public bool clicked;
+    public Vector3 dest;
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            flag = true;
+            clicked = true;
             Ray ray = c.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
